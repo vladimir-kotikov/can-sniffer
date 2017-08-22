@@ -1,0 +1,19 @@
+{
+  "name": "can-sniffer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "tsc -p ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serialport": "^4.0.7"
+  },
+  "devDependencies": {
+    "@types/serialport": "^4.0.9",
+    "typescript": "^2.4.2"
+  }
+}
