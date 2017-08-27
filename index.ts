@@ -1,7 +1,13 @@
 
 import * as Serial from "serialport";
 
-const serial = new Serial("/dev/cu.SLAB_USBtoUART", {
+const DEFAULT_PORT: { [platform: string]: string } = {
+    win32: "COM3",
+    darwin: "/dev/cu.SLAB_USBtoUART",
+    linux: "/dev/tty-usbserial1",
+};
+
+const serial = new Serial(DEFAULT_PORT[process.platform], {
     baudRate: 57600,
     autoOpen: true
 });
