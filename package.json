@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "tsc -p ."
+    "test": "mocha test",
+    "postinstall": "tsc -p .",
+    "build": "tsc -p ."
   },
   "author": "",
   "license": "ISC",
