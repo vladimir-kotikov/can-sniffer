@@ -4,7 +4,7 @@ import * as Serial from "serialport";
 const DEFAULT_PORT: { [platform: string]: string } = {
     win32: "COM3",
     darwin: "/dev/cu.SLAB_USBtoUART",
-    linux: "/dev/tty-usbserial1",
+    linux: "/dev/tty-USB0",
 };
 
 const serial = new Serial(DEFAULT_PORT[process.platform], {
