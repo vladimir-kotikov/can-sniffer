@@ -23,7 +23,10 @@ serial.on("data", (data: Buffer) => {
     }
 
     const message = CanMessage.fromRawParcel(data);
-    let str = `ArbID: ${message.arbitrationId || "---"} EcuID: ${message.ecuId} : ${message.dataAsHexString()}`;
+    let str = `ArbID: ${message.arbitrationId ? message.arbitrationId.toString(16) : "---"} ` +
+        `EcuID: ${message.ecuId.toString(16)} : ` +
+        `${message.dataAsHexString()}`;
+
     if (message.extended) {
         str += " EXT: 1"
     }
@@ -38,7 +41,7 @@ serial.on("data", (data: Buffer) => {
 serial.on("error", err => console.error(err));
 
 
-class CanMessage {
+export class CanMessage {
     public extended: boolean = false;
     public rtr: boolean = false;
     public arbitrationId: number;
@@ -54,7 +57,7 @@ class CanMessage {
         result.extended = readBit(7, canExtByte) === 1;
         result.rtr = readBit(7, canExtByte) === 1;
 
-        const header = (parcel.readInt16LE(2) << 16) & parcel.readInt16LE(4);
+        const header = (parcel.readInt16LE(2) << 16) | parcel.readInt16LE(4);
         result.ecuId = readBits(0, 11, header);
         result.arbitrationId = result.extended ? readBits(12, 29, header) : 0;
 
