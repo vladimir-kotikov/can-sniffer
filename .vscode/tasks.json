@@ -13,6 +13,20 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "type": "shell",
+            "command": "node",
+            "args": [
+                "${workspaceRoot/test/bitops.test.js}"
+            ],
+            "dependsOn": "watch",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "isBackground": false,
+            "taskName": "Test"
         }
     ]
 }
