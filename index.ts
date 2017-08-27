@@ -7,6 +7,8 @@ const DEFAULT_PORT: { [platform: string]: string } = {
     linux: "/dev/ttyUSB0",
 };
 
+const DEBUG = process.argv.indexOf("--debug") >= 2;
+
 const serial = new Serial(DEFAULT_PORT[process.platform], {
     baudRate: 57600,
     autoOpen: true
@@ -15,6 +17,11 @@ const serial = new Serial(DEFAULT_PORT[process.platform], {
 serial.on("open", () => console.log("Port is opened"));
 
 serial.on("data", (data: Buffer) => {
+    if (DEBUG) {
+        console.log("[DEBUG] Raw parcel", data.toString("hex"));
+        console.log(`[DEBUG] LEN: ${data.readInt16LE(0)} IDH: ${data.readInt16LE(2)} IDL: ${data.readInt16LE(4)}`);
+    }
+
     const message = CanMessage.fromRawParcel(data);
     let str = `ArbID: ${message.arbitrationId || "---"} EcuID: ${message.ecuId} : ${message.dataAsHexString()}`;
     if (message.extended) {
