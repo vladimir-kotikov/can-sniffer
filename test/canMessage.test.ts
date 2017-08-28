@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { CanMessage } from "../index";
+import { CanMessage } from "../src/CanMessage";
 
 const sampleParcel = Buffer.from([
     0x08, 0x31, // LEN
