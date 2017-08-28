@@ -19,7 +19,7 @@ serial.on("open", () => console.log("Port is opened"));
 serial.on("data", (data: Buffer) => {
     if (DEBUG) {
         console.log("[DEBUG] Raw parcel", data.toString("hex"));
-        console.log(`[DEBUG] LEN: ${data.readInt16LE(0)} IDH: ${data.readInt16LE(2)} IDL: ${data.readInt16LE(4)}`);
+        console.log(`[DEBUG] LEN: ${data.readInt16BE(0)} IDH: ${data.readInt16BE(2)} IDL: ${data.readInt16BE(4)}`);
     }
 
     const message = CanMessage.fromRawParcel(data);
@@ -51,13 +51,14 @@ export class CanMessage {
 
     public static fromRawParcel(parcel: Buffer): CanMessage {
         let result = new CanMessage();
-        result.length = parcel.readInt8(0);
 
-        const canExtByte = parcel.readInt8(1);
+        const canExtByte = parcel.readInt8(0);
         result.extended = readBit(7, canExtByte) === 1;
         result.rtr = readBit(7, canExtByte) === 1;
 
-        const header = (parcel.readInt16LE(2) << 16) | parcel.readInt16LE(4);
+        result.length = parcel.readInt8(1);
+
+        const header = (parcel.readInt16BE(2) << 16) | parcel.readInt16BE(4);
         result.ecuId = readBits(0, 11, header);
         result.arbitrationId = result.extended ? readBits(12, 29, header) : 0;
 
