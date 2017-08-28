@@ -68,11 +68,17 @@ function loadFilters(filters: number[], filterFile: string): void {
         }
 
         content = content
-            .map(parseInt)
+            .map(int => parseInt(int))
             .filter(int => !isNaN(int));
 
         filters = content;
-        console.log(`Loaded ${filters.length} filters`);
+
+        let str = `Loaded ${filters.length} filters`;
+        if (DEBUG) {
+            str += `: ${filters.map(n => "0x" + n.toString(16))}`;
+        }
+
+        console.log(str);
     } catch (err) {
         return;
     }
