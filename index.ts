@@ -2,8 +2,10 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as Serial from "serialport";
-import { CanMessage } from "./src/CanMessage";
 import * as stripComments from "strip-json-comments";
+
+import { CanMessage } from "./src/CanMessage";
+import { Filters } from "./src/Filters";
 
 const DEFAULT_PORT: { [platform: string]: string } = {
     win32: "COM3",
@@ -11,7 +13,7 @@ const DEFAULT_PORT: { [platform: string]: string } = {
     linux: "/dev/ttyUSB0",
 };
 
-let FILTERS: number[] = [];
+let FILTERS = new Filters();
 const DEBUG = process.argv.indexOf("--debug") >= 2;
 const FILTER_FILE = path.resolve("./.canfilters");
 
@@ -42,7 +44,7 @@ serial.on("data", (data: Buffer) => {
     }
 
     const message = CanMessage.fromRawParcel(data);
-    if (FILTERS.indexOf(message.ecuId) >= 0) {
+    if (FILTERS.get().indexOf(message.ecuId) >= 0) {
         return;
     }
 
@@ -59,7 +61,7 @@ serial.on("data", (data: Buffer) => {
     console.log(str);
 });
 
-function loadFilters(filters: number[], filterFile: string): void {
+function loadFilters(filters: Filters, filterFile: string): void {
     let content: any[];
     try {
         content = JSON.parse(stripComments(fs.readFileSync(filterFile, "utf8")));
@@ -71,11 +73,11 @@ function loadFilters(filters: number[], filterFile: string): void {
             .map(int => parseInt(int))
             .filter(int => !isNaN(int));
 
-        filters = content;
+        filters.set(content);
 
-        let str = `Loaded ${filters.length} filters`;
+        let str = `Loaded ${content.length} filters`;
         if (DEBUG) {
-            str += `: ${filters.map(n => "0x" + n.toString(16))}`;
+            str += `: ${content.map(n => "0x" + n.toString(16))}`;
         }
 
         console.log(str);
