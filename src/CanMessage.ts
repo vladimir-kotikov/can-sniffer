@@ -18,18 +18,19 @@ export class CanMessage {
 
     public static fromRawParcel(parcel: Buffer): CanMessage {
         let result = new CanMessage();
-        result.length = parcel.readInt8(0);
 
-        const canExtByte = parcel.readInt8(1);
+        const canExtByte = parcel.readUInt8(0);
         result.extended = readBit(7, canExtByte) === 1;
         result.rtr = readBit(7, canExtByte) === 1;
 
-        const header = (parcel.readInt16LE(2) << 16) | parcel.readInt16LE(4);
+        result.length = parcel.readUInt8(1);
+
+        const header = (parcel.readUInt16BE(2) << 16) | parcel.readUInt16BE(4);
         result.ecuId = readBits(0, 11, header);
         result.arbitrationId = result.extended ? readBits(12, 29, header) : 0;
 
         for (var i = 0; i < result.length; i++) {
-            result.data[i] = parcel.readInt8(6 + i);
+            result.data[i] = parcel.readUInt8(6 + i);
         }
 
         return result;

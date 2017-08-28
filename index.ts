@@ -21,7 +21,7 @@ serial.on("error", err => console.error(err));
 serial.on("data", (data: Buffer) => {
     if (DEBUG) {
         console.log("[DEBUG] Raw parcel", data.toString("hex"));
-        console.log(`[DEBUG] LEN: ${data.readInt16BE(0)} IDH: ${data.readInt16BE(2)} IDL: ${data.readInt16BE(4)}`);
+        console.log(`[DEBUG] LEN: ${data.readUInt16BE(0)} IDH: ${data.readUInt16BE(2)} IDL: ${data.readUInt16BE(4)}`);
     }
 
     const message = CanMessage.fromRawParcel(data);
