@@ -5,7 +5,7 @@ import { CanMessage } from "../CanMessage";
 const TAG = "[ecuid]";
 
 export class EcuIDFilter extends BaseFilter implements IFilter {
-    public static configName = "ecuid";
+    public static configName = "ecuIDs";
 
     private ecuIDs: number[] = [];
 

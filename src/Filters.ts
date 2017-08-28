@@ -11,7 +11,7 @@ const KNOWN_FILTERS = {
     [ChangingFilter.configName]: ChangingFilter
 };
 
-const TAG = "[filters]";
+const TAG = "[fltrs]";
 
 export class FilterCollection implements IFilter {
 
@@ -34,6 +34,7 @@ export class FilterCollection implements IFilter {
             let content = JSON.parse(stripComments(readFileSync(this.filename, "utf8")));
 
             const newFilters = Object.keys(content)
+                .filter(filterName => !!content[filterName])
                 .filter(filterName => KNOWN_FILTERS[filterName])
                 .map(filterName => {
                     const filterDef = content[filterName];

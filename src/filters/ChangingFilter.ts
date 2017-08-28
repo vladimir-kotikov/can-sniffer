@@ -2,14 +2,18 @@
 import { BaseFilter, IFilter } from "./BaseFilter";
 import { CanMessage } from "../CanMessage";
 
+const TAG = "[chnge]";
+
 export class ChangingFilter extends BaseFilter implements IFilter {
-    public static configName = "changing";
+    public static configName = "onlyChanged";
 
     private capturedMessages: { [ecuId: number]: number[] };
 
     constructor(data: any) {
         super();
-        this.capturedMessages = { };
+        this.capturedMessages = {};
+
+        console.log(TAG, "Loaded");
     }
 
     passes(message: CanMessage): boolean {
