@@ -2,7 +2,7 @@ import * as path from "path";
 import * as Serial from "serialport";
 
 import { CanMessage } from "./src/CanMessage";
-import { FilterCollection } from "./src/Filters";
+import { FilterCollection } from "./src/FiltersCollection";
 
 const TAG = "[main]";
 const DEBUG = process.argv.indexOf("--debug") >= 2;
@@ -21,7 +21,6 @@ const serial = new Serial(DEFAULT_PORT[process.platform], {
 
 serial.on("open", () => console.log(TAG, "Port is opened"));
 serial.on("error", err => console.error(err));
-
 serial.on("data", (data: Buffer) => {
     if (DEBUG) {
         console.log(TAG, "Raw parcel", data.toString("hex"));
