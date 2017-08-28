@@ -1,5 +1,5 @@
 
-import { BaseFilter, IFilter } from "./Filter";
+import { BaseFilter, IFilter } from "./BaseFilter";
 import { CanMessage } from "../CanMessage";
 
 const TAG = "[ecuid]";

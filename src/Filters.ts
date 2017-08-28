@@ -1,12 +1,14 @@
 import { existsSync, readFileSync, watch } from "fs";
 import * as stripComments from "strip-json-comments";
 
-import { BaseFilter, IFilter } from "./filters/Filter";
+import { BaseFilter, IFilter } from "./filters/BaseFilter";
 import { EcuIDFilter } from "./filters/EcuIDFilter";
+import { ChangingFilter } from "./filters/ChangingFilter";
 import { CanMessage } from "./CanMessage";
 
 const KNOWN_FILTERS = {
-    [EcuIDFilter.configName]: EcuIDFilter
+    [EcuIDFilter.configName]: EcuIDFilter,
+    [ChangingFilter.configName]: ChangingFilter
 };
 
 const TAG = "[filters]";
