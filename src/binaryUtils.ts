@@ -1,8 +1,9 @@
 
 export function readBits(startBit: number, endBit: number, value: number) {
     let mask = 0;
-    for (let i = startBit; i <= endBit; i++)
+    for (let i = startBit; i <= endBit; i++) {
         mask |= 1 << i;
+    }
 
     return (value & mask) >> startBit;
 }

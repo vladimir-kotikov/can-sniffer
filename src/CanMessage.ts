@@ -29,7 +29,7 @@ export class CanMessage {
         result.ecuId = readBits(0, 11, header);
         result.arbitrationId = result.extended ? readBits(12, 29, header) : 0;
 
-        for (var i = 0; i < result.length; i++) {
+        for (let i = 0; i < result.length; i++) {
             result.data[i] = parcel.readUInt8(6 + i);
         }
 

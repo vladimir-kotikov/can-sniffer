@@ -1,15 +1,20 @@
 {
   "name": "can-sniffer",
   "version": "1.0.0",
-  "description": "",
+  "description": "A command-line utility to listen and parse CAN bus traffic over serial port",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test",
+    "test": "npm run build && npm run lint && mocha test",
+    "lint": "tslint -p . --type-check",
     "postinstall": "tsc -p .",
     "build": "tsc -p ."
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vladimir-kotikov/can-sniffer"
+  },
   "dependencies": {
     "serialport": "^4.0.7",
     "strip-json-comments": "^2.0.1"
@@ -19,6 +24,7 @@
     "@types/serialport": "^4.0.9",
     "@types/strip-json-comments": "0.0.30",
     "mocha": "^2.5.3",
+    "tslint": "^5.7.0",
     "typescript": "^2.4.2"
   }
 }

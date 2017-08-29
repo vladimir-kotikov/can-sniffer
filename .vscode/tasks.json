@@ -15,18 +15,36 @@
             }
         },
         {
-            "type": "shell",
-            "command": "node",
-            "args": [
-                "${workspaceRoot/test/bitops.test.js}"
-            ],
-            "dependsOn": "watch",
+            "type": "npm",
+            "group": "test",
+            "script": "lint",
+            "identifier": "lint",
+            "label": "lint",
+            "problemMatcher": [ "$tslint5" ],
+            "isBackground": false,
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "type": "npm",
             "group": {
                 "kind": "test",
                 "isDefault": true
             },
+            "identifier": "test",
+            "label": "test",
             "isBackground": false,
-            "taskName": "Test"
+            "script": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            }
         }
     ]
 }

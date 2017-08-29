@@ -33,7 +33,7 @@ function arrayEqual(arr1: number[], arr2: number[]) {
         return false;
     }
 
-    for (var i = 0; i < arr1.length; i++) {
+    for (let i = 0; i < arr1.length; i++) {
         if (arr1[i] !== arr2[i]) {
             return false;
         }
